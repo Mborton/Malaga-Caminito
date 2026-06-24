@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="es"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Análisis Metodológico: Plan de Turismo Accesible de Málaga | Transferencia a Caminito</title>
@@ -575,32 +574,89 @@
     .slide { display: block !important; page-break-after: always; min-height: auto; }
     .orador-content { display: block !important; }
   }
+
+  /* ── MODO EDICIÓN ── */
+  body.edit-mode [contenteditable] {
+    outline: 2px dashed var(--acento);
+    border-radius: 4px;
+    cursor: text;
+    background: rgba(232,168,56,0.06);
+    min-height: 1em;
+  }
+  body.edit-mode [contenteditable]:focus {
+    outline: 2px solid var(--acento);
+    background: rgba(232,168,56,0.12);
+    box-shadow: 0 0 0 4px rgba(232,168,56,0.15);
+  }
+  .edit-banner {
+    display: none;
+    position: fixed;
+    bottom: 16px; left: 50%; transform: translateX(-50%);
+    background: var(--azul-profundo);
+    color: white;
+    padding: 10px 22px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 200;
+    gap: 14px;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .edit-banner.show { display: flex; }
+  .edit-banner-btn {
+    background: var(--acento);
+    color: var(--azul-profundo);
+    border: none;
+    padding: 5px 14px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .edit-banner-btn:hover { opacity: 0.85; }
+  #btn-edit.editing {
+    background: var(--acento);
+    color: var(--azul-profundo);
+    font-weight: 700;
+  }
+
 </style>
 </head>
-<body>
+<body class="edit-mode">
 
 <!-- BARRA SUPERIOR -->
 <nav class="nav-bar">
   <div class="nav-title">Maestría en Turismo · UBA · Análisis Metodológico Málaga → Caminito</div>
   <div class="nav-controls">
     <button class="nav-btn" onclick="prevSlide()">← Anterior</button>
-    <span class="slide-counter" id="counter">1 / 15</span>
+    <span class="slide-counter" id="counter">6 / 15</span>
     <button class="nav-btn" onclick="nextSlide()">Siguiente →</button>
+    <button class="nav-btn editing" id="btn-edit" onclick="toggleEdit()">✕ Editar</button>
     <button class="nav-btn" onclick="toggleSidebar()">☰</button>
   </div>
 </nav>
 
+<!-- BANNER MODO EDICIÓN -->
+<div class="edit-banner show" id="edit-banner">
+  <span>✏️ Modo edición — hacé clic en cualquier texto para modificarlo</span>
+  <button class="edit-banner-btn" onclick="saveEdits()">💾 Guardar HTML</button>
+  <button class="edit-banner-btn" style="background:rgba(255,255,255,0.2);color:white;" onclick="toggleEdit()">✕ Salir</button>
+</div>
+
 <!-- ÍNDICE LATERAL -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-section">Introducción</div>
-  <div class="sidebar-item active" onclick="goTo(0)"><span class="sidebar-num">01</span><span class="sidebar-label">Presentación y pregunta central</span></div>
+  <div class="sidebar-item" onclick="goTo(0)"><span class="sidebar-num">01</span><span class="sidebar-label">Presentación y pregunta central</span></div>
   <div class="sidebar-item" onclick="goTo(1)"><span class="sidebar-num">02</span><span class="sidebar-label">¿Por qué Málaga?</span></div>
 
   <div class="sidebar-section">Metodología de Málaga</div>
   <div class="sidebar-item" onclick="goTo(2)"><span class="sidebar-num">03</span><span class="sidebar-label">Enfoque metodológico DTI</span></div>
   <div class="sidebar-item" onclick="goTo(3)"><span class="sidebar-num">04</span><span class="sidebar-label">Diagnóstico y construcción de evidencia</span></div>
   <div class="sidebar-item" onclick="goTo(4)"><span class="sidebar-num">05</span><span class="sidebar-label">Gobernanza multiactor</span></div>
-  <div class="sidebar-item" onclick="goTo(5)"><span class="sidebar-num">06</span><span class="sidebar-label">Planificación estratégica</span></div>
+  <div class="sidebar-item active" onclick="goTo(5)"><span class="sidebar-num">06</span><span class="sidebar-label">Planificación estratégica</span></div>
   <div class="sidebar-item" onclick="goTo(6)"><span class="sidebar-num">07</span><span class="sidebar-label">Demanda turística accesible</span></div>
   <div class="sidebar-item" onclick="goTo(7)"><span class="sidebar-num">08</span><span class="sidebar-label">Accesibilidad como competitividad</span></div>
 
@@ -620,27 +676,27 @@
 <!-- ══════════════════════════════════════════════════════
      DIAPOSITIVA 1 · PORTADA / PRESENTACIÓN
 ══════════════════════════════════════════════════════ -->
-<section class="slide active" id="slide-0">
+<section class="slide" id="slide-0">
   <div class="slide-hero">
-    <div class="tag tag-white">Maestría en Economía y Gestión del Turismo · UBA · 2026</div>
-    <h1 class="hero-title">Análisis Metodológico del Plan de Turismo Accesible de Málaga</h1>
-    <p class="hero-sub">¿Qué elementos metodológicos del caso Málaga pueden orientar el diseño de una política de accesibilidad turística en el Circuito Caminito?</p>
+    <div class="tag tag-white" spellcheck="false">Maestría en Economía y Gestión del Turismo · UBA · 2026</div>
+    <h1 class="hero-title" spellcheck="false">Análisis Metodológico del Plan de Turismo Accesible de Málaga</h1>
+    <p class="hero-sub" spellcheck="false">¿Qué elementos metodológicos del caso Málaga pueden orientar el diseño de una política de accesibilidad turística en el Circuito Caminito?</p>
     <div class="stats-row">
       <div class="stat-chip">
-        <div class="s-num">4.7M</div>
-        <div class="s-label">Visitantes anuales Málaga</div>
+        <div class="s-num" spellcheck="false">4.7M</div>
+        <div class="s-label" spellcheck="false">Visitantes anuales Málaga</div>
       </div>
       <div class="stat-chip">
-        <div class="s-num">28%</div>
-        <div class="s-label">+ gasto medio turistas accesibles</div>
+        <div class="s-num" spellcheck="false">28%</div>
+        <div class="s-label" spellcheck="false">+ gasto medio turistas accesibles</div>
       </div>
       <div class="stat-chip">
-        <div class="s-num">89M</div>
-        <div class="s-label">Personas con req. accesibles en EU</div>
+        <div class="s-num" spellcheck="false">89M</div>
+        <div class="s-label" spellcheck="false">Personas con req. accesibles en EU</div>
       </div>
       <div class="stat-chip">
-        <div class="s-num">€142B</div>
-        <div class="s-label">Mercado perdido por barreras en EU</div>
+        <div class="s-num" spellcheck="false">€142B</div>
+        <div class="s-label" spellcheck="false">Mercado perdido por barreras en EU</div>
       </div>
     </div>
   </div>
@@ -651,50 +707,51 @@
 ══════════════════════════════════════════════════════ -->
 <section class="slide" id="slide-1">
   <div class="slide-content">
-    <div class="slide-num">02 / 15</div>
-    <h2 class="slide-title">¿Por qué Málaga es caso relevante?</h2>
-    <p class="subtitle-text">No por ser modelo perfecto, sino por ser un destino consolidado que resolvió problemas reales con metodología sistemática</p>
+    <div class="slide-num" spellcheck="false">02 / 15</div>
+    <h2 class="slide-title" spellcheck="false">¿Por qué Málaga es caso relevante?</h2>
+    <p class="subtitle-text" spellcheck="false">No por ser modelo perfecto, sino por ser un destino consolidado que resolvió problemas reales con metodología sistemática</p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-top:12px;">
       <div class="card card-accent-green">
         <div class="icon-circle icon-green">🏙️</div>
-        <h3 class="section-title green">Contexto similar</h3>
+        <h3 class="section-title green" spellcheck="false">Contexto similar</h3>
         <ul class="bullet-list green">
-          <li>Destino urbano cultural consolidado</li>
-          <li>Patrimonio histórico concentrado en circuito específico (Centro, Soho, Alcazaba)</li>
-          <li>Alta concentración de visitantes en espacios limitados</li>
-          <li>Presupuesto municipal acotado con prioridades en competencia</li>
+          <li spellcheck="false">Destino urbano cultural consolidado</li>
+          <li spellcheck="false">Patrimonio histórico concentrado en circuito específico (Centro, Soho, Alcazaba)</li>
+          <li spellcheck="false">Alta concentración de visitantes en espacios limitados</li>
+          <li spellcheck="false">Presupuesto municipal acotado con prioridades en competencia</li>
         </ul>
       </div>
       <div class="card card-accent-gold">
         <div class="icon-circle icon-gold">🔬</div>
-        <h3 class="section-title gold">Rigor metodológico</h3>
+        <h3 class="section-title gold" spellcheck="false">Rigor metodológico</h3>
         <ul class="bullet-list gold">
-          <li>Marco DTI como base estructurante (UNE 178501)</li>
-          <li>Diagnóstico multimodal antes de definir acciones</li>
-          <li>DAFO + CAME para traducir hallazgos a estrategia</li>
-          <li>Indicadores medibles y seguimiento evaluativo</li>
+          <li spellcheck="false">Marco DTI como base estructurante (UNE 178501)</li>
+          <li spellcheck="false">Diagnóstico multimodal antes de definir acciones</li>
+          <li spellcheck="false">DAFO + CAME para traducir hallazgos a estrategia</li>
+          <li spellcheck="false">Indicadores medibles y seguimiento evaluativo</li>
         </ul>
       </div>
       <div class="card card-accent-top">
         <div class="icon-circle icon-blue">🚀</div>
-        <h3 class="section-title">Resultados transferibles</h3>
+        <h3 class="section-title" spellcheck="false">Resultados transferibles</h3>
         <ul class="bullet-list">
-          <li>Por encima de media nacional en Eje Accesibilidad DTI</li>
-          <li>Sello distintivo de accesibilidad implementado</li>
-          <li>Itinerarios accesibles planificados a corto, mediano y largo plazo (2020–2035)</li>
-          <li>Foro sectorial con participación público-privada activa</li>
+          <li spellcheck="false">Por encima de media nacional en Eje Accesibilidad DTI</li>
+          <li spellcheck="false">Sello distintivo de accesibilidad implementado</li>
+          <li spellcheck="false">Itinerarios accesibles planificados a corto, mediano y largo plazo (2020–2035)</li>
+          <li spellcheck="false">Foro sectorial con participación público-privada activa</li>
         </ul>
       </div>
     </div>
 
-    <div class="highlight-box" style="margin-top:24px;">
+    
+<div class="highlight-box" style="margin-top:16px;" spellcheck="false">
       <strong>Clave metodológica:</strong> Málaga no "mejoró accesibilidad" de manera espontánea. Comenzó integrando accesibilidad como <em>eje estratégico de su Proyecto Destino Turístico Inteligente</em>, generando un plan propio articulado con el Plan Estratégico de Turismo 2021–2024. Esa arquitectura institucional previa es lo que hace replicable su experiencia.
     </div>
 
     <button class="toggle-orador" onclick="toggleOrador(this)">📋 Notas del orador</button>
     <div class="orador-content">
-      <div class="orador-box">
+      <div class="orador-box" spellcheck="false">
         <div class="orador-label">Notas del orador · 1 min</div>
         La pregunta que guía toda la presentación no es "¿qué hizo Málaga?" sino "¿cómo lo hizo?". La diferencia es metodológica: Málaga no actuó por impulso o voluntad política aislada. Integró accesibilidad en su sistema de gestión turística (el DTI), usó instrumentos concretos (diagnóstico, encuesta ciudadana, trabajo de campo), y alineó el plan con documentos estratégicos previos. Eso es lo que genera continuidad y legitimidad. Para Caminito, la pregunta análoga es: ¿qué marco institucional necesita para que las mejoras de accesibilidad sean sistemáticas y no esporádicas?
       </div>
@@ -707,36 +764,36 @@
 ══════════════════════════════════════════════════════ -->
 <section class="slide" id="slide-2">
   <div class="slide-content">
-    <div class="slide-num">03 / 15</div>
-    <h2 class="slide-title">Enfoque metodológico: DTI como marco estructurante</h2>
-    <p class="subtitle-text">Málaga estructura su plan bajo norma UNE 178501:2018 · Eje de Accesibilidad Universal</p>
+    <div class="slide-num" spellcheck="false">03 / 15</div>
+    <h2 class="slide-title" spellcheck="false">Enfoque metodológico: DTI como marco estructurante</h2>
+    <p class="subtitle-text" spellcheck="false">Málaga estructura su plan bajo norma UNE 178501:2018 · Eje de Accesibilidad Universal</p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:16px;">
       <div>
-        <h3 class="section-title">¿Qué define el marco DTI?</h3>
+        <h3 class="section-title" spellcheck="false">¿Qué define el marco DTI?</h3>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
-            <div class="step-text"><strong>Gestión de la accesibilidad</strong> Normativa, planes, mecanismos de participación, formación, comunicación e información accesible</div>
+            <div class="step-text" spellcheck="false"><strong>Gestión de la accesibilidad</strong> Normativa, planes, mecanismos de participación, formación, comunicación e información accesible</div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
-            <div class="step-text"><strong>Implantación en destino</strong> Análisis de recursos turísticos prioritarios, transporte y movilidad, percepción ciudadana</div>
+            <div class="step-text" spellcheck="false"><strong>Implantación en destino</strong> Análisis de recursos turísticos prioritarios, transporte y movilidad, percepción ciudadana</div>
           </div>
           <div class="step">
             <div class="step-num">3</div>
-            <div class="step-text"><strong>Indicadores de seguimiento</strong> Métricas cuantitativas y cualitativas de avance en cada eje</div>
+            <div class="step-text" spellcheck="false"><strong>Indicadores de seguimiento</strong> Métricas cuantitativas y cualitativas de avance en cada eje</div>
           </div>
           <div class="step">
             <div class="step-num">4</div>
-            <div class="step-text"><strong>Alineamiento estratégico</strong> Coherencia con Plan Estratégico de Turismo, normativa municipal y proyectos de impacto en el destino</div>
+            <div class="step-text" spellcheck="false"><strong>Alineamiento estratégico</strong> Coherencia con Plan Estratégico de Turismo, normativa municipal y proyectos de impacto en el destino</div>
           </div>
         </div>
       </div>
       <div>
-        <h3 class="section-title green">Alcance del diagnóstico en Málaga</h3>
+        <h3 class="section-title green" spellcheck="false">Alcance del diagnóstico en Málaga</h3>
         <div class="card card-accent-green" style="margin-bottom:14px;">
-          <p style="font-size:13px; margin-bottom:12px; color:var(--gris-medio);">20 recursos turísticos auditados in situ:</p>
+          <p style="font-size:13px; margin-bottom:12px; color:var(--gris-medio);" spellcheck="false">20 recursos turísticos auditados in situ:</p>
           <div class="pill-row">
             <span class="pill pill-outline-green">Museo Picasso</span>
             <span class="pill pill-outline-green">Alcazaba</span>
@@ -750,19 +807,20 @@
           </div>
         </div>
         <div class="card card-accent-gold">
-          <p style="font-size:13px; font-weight:600; margin-bottom:8px; color:#8B6010;">Desempeño medido antes del Plan:</p>
-          <p style="font-size:13px; color:var(--gris-oscuro);">Málaga se posicionaba por encima de la media nacional en <em>implantación física</em> de accesibilidad, pero con brechas significativas en <strong>accesibilidad online, señalización y seguimiento de actuaciones</strong>.</p>
+          <p style="font-size:13px; font-weight:600; margin-bottom:8px; color:#8B6010;" spellcheck="false">Desempeño medido antes del Plan:</p>
+          <p style="font-size:13px; color:var(--gris-oscuro);" spellcheck="false">Málaga se posicionaba por encima de la media nacional en <em>implantación física</em> de accesibilidad, pero con brechas significativas en <strong>accesibilidad online, señalización y seguimiento de actuaciones</strong>.</p>
         </div>
       </div>
     </div>
 
-    <div class="highlight-box blue" style="margin-top:20px;">
+    
+<div class="highlight-box blue" style="margin-top:16px;" spellcheck="false">
       <strong>Relevancia para Caminito:</strong> El marco DTI proporciona una estructura de gestión replicable sin necesidad de partir de cero. Caminito podría adoptar los mismos ejes de análisis (gestión + implantación + indicadores) adaptados a la escala de un circuito urbano.
     </div>
 
     <button class="toggle-orador" onclick="toggleOrador(this)">📋 Notas del orador</button>
     <div class="orador-content">
-      <div class="orador-box">
+      <div class="orador-box" spellcheck="false">
         <div class="orador-label">Notas del orador · 1 min</div>
         El DTI no es una moda tecnológica: es un sistema de gestión. Lo que Málaga hace es adoptar una norma técnica (UNE 178501) como marco que le indica qué analizar, qué medir y cómo estructurar la estrategia. Eso le da legitimidad técnica y comparabilidad con otros destinos. Para Caminito, lo valioso de esta diapositiva es que el DTI ofrece un esquema ya probado: diagnosticar gestión e implantación, medir con indicadores, y alinear el plan con documentos estratégicos preexistentes. No hay que inventar el marco: hay que adoptarlo y adaptarlo.
       </div>
@@ -776,50 +834,50 @@
 <section class="slide" id="slide-3">
   <div class="slide-split" style="align-items:start;">
     <div>
-      <div class="slide-num">04 / 15</div>
-      <h2 class="slide-title">Construcción de evidencia: diagnóstico multimodal</h2>
-      <p class="subtitle-text">Málaga combina cuatro fuentes que se validan entre sí</p>
+      <div class="slide-num" spellcheck="false">04 / 15</div>
+      <h2 class="slide-title" spellcheck="false">Construcción de evidencia: diagnóstico multimodal</h2>
+      <p class="subtitle-text" spellcheck="false">Málaga combina cuatro fuentes que se validan entre sí</p>
       <div class="steps" style="margin-top:20px;">
         <div class="step">
           <div class="step-num" style="background:var(--verde-malaga);">1</div>
-          <div class="step-text"><strong>Análisis documental</strong> Normativa local, planes estratégicos, datos del Observatorio Turístico, marco normativo estatal</div>
+          <div class="step-text" spellcheck="false"><strong>Análisis documental</strong> Normativa local, planes estratégicos, datos del Observatorio Turístico, marco normativo estatal</div>
         </div>
         <div class="step">
           <div class="step-num" style="background:var(--verde-malaga);">2</div>
-          <div class="step-text"><strong>Entrevistas semiestructuradas</strong> Ámbito público (Turismo + Accesibilidad), privado (Foro Sectorial de Turismo), social (asociaciones de discapacidad)</div>
+          <div class="step-text" spellcheck="false"><strong>Entrevistas semiestructuradas</strong> Ámbito público (Turismo + Accesibilidad), privado (Foro Sectorial de Turismo), social (asociaciones de discapacidad)</div>
         </div>
         <div class="step">
           <div class="step-num" style="background:var(--verde-malaga);">3</div>
-          <div class="step-text"><strong>Encuesta ciudadana online</strong> Con foco específico en asociaciones de personas con discapacidad — no muestra genérica sino expertos-usuario</div>
+          <div class="step-text" spellcheck="false"><strong>Encuesta ciudadana online</strong> Con foco específico en asociaciones de personas con discapacidad — no muestra genérica sino expertos-usuario</div>
         </div>
         <div class="step">
           <div class="step-num" style="background:var(--verde-malaga);">4</div>
-          <div class="step-text"><strong>Trabajo de campo in situ</strong> Evaluación física de los 20 recursos prioritarios: rampas, baños, señalización, información, circulación</div>
+          <div class="step-text" spellcheck="false"><strong>Trabajo de campo in situ</strong> Evaluación física de los 20 recursos prioritarios: rampas, baños, señalización, información, circulación</div>
         </div>
       </div>
-      <div class="highlight-box green" style="margin-top:20px;">
+      <div class="highlight-box green" style="margin-top:20px;" spellcheck="false">
         <strong>Resultado clave:</strong> El diagnóstico detectó que el eslabón peor valorado de la cadena de valor es <em>tiendas y comercios</em> (dato de encuesta), mientras el transporte obtiene 7,5/10. Eso orienta prioridades reales.
       </div>
     </div>
     <div>
       <div class="card card-accent-green" style="margin-bottom:20px;">
-        <h3 class="section-title green">Hallazgos del diagnóstico en Málaga</h3>
+        <h3 class="section-title green" spellcheck="false">Hallazgos del diagnóstico en Málaga</h3>
         <ul class="bullet-list green">
-          <li>Implantación física alta, pero brechas críticas en <strong>accesibilidad digital y comunicacional</strong></li>
-          <li>Sin mecanismos de seguimiento o evaluación de actuaciones previas</li>
-          <li>Ordenanza de accesibilidad municipal (2004) desactualizada respecto al marco normativo vigente</li>
-          <li>Foro de Turismo activo pero sin línea temática de accesibilidad integrada</li>
-          <li>Señalización turística sin criterios de accesibilidad sistemáticos</li>
+          <li spellcheck="false">Implantación física alta, pero brechas críticas en <strong>accesibilidad digital y comunicacional</strong></li>
+          <li spellcheck="false">Sin mecanismos de seguimiento o evaluación de actuaciones previas</li>
+          <li spellcheck="false">Ordenanza de accesibilidad municipal (2004) desactualizada respecto al marco normativo vigente</li>
+          <li spellcheck="false">Foro de Turismo activo pero sin línea temática de accesibilidad integrada</li>
+          <li spellcheck="false">Señalización turística sin criterios de accesibilidad sistemáticos</li>
         </ul>
       </div>
       <div class="card card-accent-red">
-        <h3 class="section-title red">¿Qué diagnotica Caminito hoy?</h3>
+        <h3 class="section-title red" spellcheck="false">¿Qué diagnotica Caminito hoy?</h3>
         <ul class="bullet-list red">
-          <li>Barreras físicas documentadas (desniveles, veredas, accesos) pero sin línea base cuantificada</li>
-          <li>Ausencia de datos sobre demanda turística con requerimientos accesibles</li>
-          <li>Sin evaluación de percepción de visitantes con discapacidad</li>
-          <li>Intervenciones anteriores (Programa Caminabilidad La Boca) sin monitoreo sistemático de impacto</li>
-          <li>No hay articulación documental entre Ente de Turismo CABA y área de accesibilidad urbana</li>
+          <li spellcheck="false">Barreras físicas documentadas (desniveles, veredas, accesos) pero sin línea base cuantificada</li>
+          <li spellcheck="false">Ausencia de datos sobre demanda turística con requerimientos accesibles</li>
+          <li spellcheck="false">Sin evaluación de percepción de visitantes con discapacidad</li>
+          <li spellcheck="false">Intervenciones anteriores (Programa Caminabilidad La Boca) sin monitoreo sistemático de impacto</li>
+          <li spellcheck="false">No hay articulación documental entre Ente de Turismo CABA y área de accesibilidad urbana</li>
         </ul>
       </div>
     </div>
@@ -831,37 +889,37 @@
 ══════════════════════════════════════════════════════ -->
 <section class="slide" id="slide-4">
   <div class="slide-content">
-    <div class="slide-num">05 / 15</div>
-    <h2 class="slide-title">Gobernanza: articulación institucional formalizada</h2>
-    <p class="subtitle-text">En Málaga, accesibilidad turística requiere coordinación entre dos áreas de gobierno independientes</p>
+    <div class="slide-num" spellcheck="false">05 / 15</div>
+    <h2 class="slide-title" spellcheck="false">Gobernanza: articulación institucional formalizada</h2>
+    <p class="subtitle-text" spellcheck="false">En Málaga, accesibilidad turística requiere coordinación entre dos áreas de gobierno independientes</p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:16px;">
       <div class="card card-accent-green">
-        <h3 class="section-title green">Estructura de Málaga</h3>
+        <h3 class="section-title green" spellcheck="false">Estructura de Málaga</h3>
         <div style="background:var(--verde-suave); border-radius:8px; padding:16px; margin-bottom:14px; text-align:center;">
           <div style="font-size:11px; color:var(--verde-malaga); font-weight:700; text-transform:uppercase; letter-spacing:0.07em;">Área de Turismo</div>
           <div style="font-size:12px; color:var(--gris-medio); margin:4px 0;">↕️ Coordinación obligatoria</div>
           <div style="font-size:11px; color:var(--verde-malaga); font-weight:700; text-transform:uppercase; letter-spacing:0.07em;">Sección de Accesibilidad<br>(Derechos Sociales)</div>
         </div>
         <ul class="bullet-list green">
-          <li><strong>Foro de Turismo (desde 2007):</strong> sector público + privado. Todavía sin eje de accesibilidad integrado — identificado como brecha a resolver</li>
-          <li><strong>Consejo Municipal de Accesibilidad:</strong> representantes de discapacidad y vecinos</li>
-          <li><strong>Foro Sectorial privado:</strong> insumos desde hotelería, hostelería, operadores</li>
-          <li><strong>Encuesta ciudadana:</strong> mecanismo de participación directa con 700+ respondentes</li>
+          <li spellcheck="false"><strong>Foro de Turismo (desde 2007):</strong> sector público + privado. Todavía sin eje de accesibilidad integrado — identificado como brecha a resolver</li>
+          <li spellcheck="false"><strong>Consejo Municipal de Accesibilidad:</strong> representantes de discapacidad y vecinos</li>
+          <li spellcheck="false"><strong>Foro Sectorial privado:</strong> insumos desde hotelería, hostelería, operadores</li>
+          <li spellcheck="false"><strong>Encuesta ciudadana:</strong> mecanismo de participación directa con 700+ respondentes</li>
         </ul>
       </div>
       <div class="card card-accent-red">
-        <h3 class="section-title red">Situación en Caminito</h3>
+        <h3 class="section-title red" spellcheck="false">Situación en Caminito</h3>
         <div style="background:var(--rojo-suave); border-radius:8px; padding:16px; margin-bottom:14px;">
-          <p style="font-size:13px; color:var(--rojo-caminito);">La gobernanza actual es <strong>informal y fragmentada</strong>: decisiones de turismo (Ente de Turismo CABA), espacio público (Ministerio de Espacio Público), y accesibilidad urbana operan con lógicas separadas sin estructura de coordinación explícita.</p>
+          <p style="font-size:13px; color:var(--rojo-caminito);" spellcheck="false">La gobernanza actual es <strong>informal y fragmentada</strong>: decisiones de turismo (Ente de Turismo CABA), espacio público (Ministerio de Espacio Público), y accesibilidad urbana operan con lógicas separadas sin estructura de coordinación explícita.</p>
         </div>
         <ul class="bullet-list red">
-          <li>Comuna 4 con competencia territorial pero sin articulación formal con Ente de Turismo</li>
-          <li>Sector privado de La Boca no participa estructuralmente en decisiones de política turística</li>
-          <li>Organizaciones de discapacidad ausentes de la agenda turística de Caminito</li>
-          <li>No existe espacio de deliberación entre actores sobre accesibilidad del circuito</li>
+          <li spellcheck="false">Comuna 4 con competencia territorial pero sin articulación formal con Ente de Turismo</li>
+          <li spellcheck="false">Sector privado de La Boca no participa estructuralmente en decisiones de política turística</li>
+          <li spellcheck="false">Organizaciones de discapacidad ausentes de la agenda turística de Caminito</li>
+          <li spellcheck="false">No existe espacio de deliberación entre actores sobre accesibilidad del circuito</li>
         </ul>
-        <div class="highlight-box red" style="margin-top:12px;">
+        <div class="highlight-box red" style="margin-top:12px;" spellcheck="false">
           <strong>Brecha crítica:</strong> Sin un espacio de gobernanza formalizado, las mejoras de accesibilidad son puntuales y no sostenibles.
         </div>
       </div>
@@ -869,7 +927,7 @@
 
     <button class="toggle-orador" onclick="toggleOrador(this)">📋 Notas del orador</button>
     <div class="orador-content">
-      <div class="orador-box">
+      <div class="orador-box" spellcheck="false">
         <div class="orador-label">Notas del orador · 1 min</div>
         El aspecto más importante de la gobernanza de Málaga no es que tenga muchos actores, sino que formalizó la articulación entre dos áreas que normalmente operan por separado: turismo y accesibilidad. En Caminito, pasa lo mismo: hay actores que hacen cosas, pero sin espacio de coordinación. Lo que Málaga muestra es que la brecha más fácil de resolver en términos normativos —pero que requiere decisión política— es crear un espacio formal donde turismo y accesibilidad se sienten juntos a planificar. Ese es el primer paso concreto para Caminito.
       </div>
@@ -880,48 +938,48 @@
 <!-- ══════════════════════════════════════════════════════
      DIAPOSITIVA 6 · PLANIFICACIÓN ESTRATÉGICA
 ══════════════════════════════════════════════════════ -->
-<section class="slide" id="slide-5">
+<section class="slide active" id="slide-5">
   <div class="slide-content">
-    <div class="slide-num">06 / 15</div>
-    <h2 class="slide-title">Planificación estratégica: de diagnóstico a propuesta operativa</h2>
-    <p class="subtitle-text">El plan de Málaga sigue la cadena: DAFO → CAME → Visión → Líneas estratégicas → Tipología de acciones</p>
+    <div class="slide-num" spellcheck="false">06 / 15</div>
+    <h2 class="slide-title" spellcheck="false">Planificación estratégica: de diagnóstico a propuesta operativa</h2>
+    <p class="subtitle-text" spellcheck="false">El plan de Málaga sigue la cadena: FODA → CAME → Visión → Líneas estratégicas → Tipología de acciones</p>
 
     <div style="display:grid; grid-template-columns:2fr 1.2fr; gap:28px; margin-top:12px;">
       <div>
-        <h3 class="section-title">Tipología de acciones en el Plan de Málaga</h3>
+        <h3 class="section-title" spellcheck="false">Tipología de acciones en el Plan de Málaga</h3>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px;">
           <div class="card" style="border-top:4px solid #C0392B;">
             <span class="badge badge-red" style="margin-bottom:10px;">Alta prioridad</span>
-            <p style="font-size:12px; line-height:1.5;">Sin estas acciones, el resto no funciona. Resolución de barreras críticas de acceso físico, información y comunicación base.</p>
+            <p style="font-size:12px; line-height:1.5;" spellcheck="false">Sin estas acciones, el resto no funciona. Resolución de barreras críticas de acceso físico, información y comunicación base.</p>
           </div>
           <div class="card" style="border-top:4px solid var(--azul-medio);">
             <span class="badge badge-blue" style="margin-bottom:10px;">Estratégicas</span>
-            <p style="font-size:12px; line-height:1.5;">Transforman el posicionamiento del destino. Itinerarios accesibles, app turística accesible, sello distintivo privado.</p>
+            <p style="font-size:12px; line-height:1.5;" spellcheck="false">Transforman el posicionamiento del destino. Itinerarios accesibles, app turística accesible, sello distintivo privado.</p>
           </div>
           <div class="card" style="border-top:4px solid var(--verde-malaga);">
             <span class="badge badge-green" style="margin-bottom:10px;">Mejora continua</span>
-            <p style="font-size:12px; line-height:1.5;">Procesos permanentes que sostienen el sistema. Capacitación, sensibilización, actualización de información, monitoreo.</p>
+            <p style="font-size:12px; line-height:1.5;" spellcheck="false">Procesos permanentes que sostienen el sistema. Capacitación, sensibilización, actualización de información, monitoreo.</p>
           </div>
           <div class="card" style="border-top:4px solid var(--acento);">
             <span class="badge badge-gold" style="margin-bottom:10px;">Mejora rápida</span>
-            <p style="font-size:12px; line-height:1.5;">Quick wins visibles en corto plazo. Genera momentum político y ciudadano sin gran inversión inicial.</p>
+            <p style="font-size:12px; line-height:1.5;" spellcheck="false">Quick wins visibles en corto plazo. Genera momentum político y ciudadano sin gran inversión inicial.</p>
           </div>
         </div>
-        <div class="highlight-box" style="margin-top:16px;">
+        <div class="highlight-box" style="margin-top:16px;" spellcheck="false">
           <strong>Clave metodológica:</strong> La tipología no es estética — <em>define prioridad de asignación de recursos y secuencia de implementación</em>. Las de alta prioridad preceden a las estratégicas.
         </div>
       </div>
       <div>
         <div class="card card-accent-green" style="margin-bottom:16px;">
-          <h3 class="section-title green">Visión de Málaga</h3>
-          <p style="font-size:14px; line-height:1.6; font-style:italic; color:var(--gris-oscuro);">"Posicionarse como <strong>destino inclusivo de referencia</strong>, garantizando experiencias accesibles para el conjunto de la ciudadanía y los visitantes"</p>
+          <h3 class="section-title green" spellcheck="false">Visión de Málaga</h3>
+          <p style="font-size:14px; line-height:1.6; font-style:italic; color:var(--gris-oscuro);" spellcheck="false">"Posicionarse como <strong>destino inclusivo de referencia</strong>, garantizando experiencias accesibles para el conjunto de la ciudadanía y los visitantes"</p>
         </div>
         <div class="card card-accent-gold">
-          <h3 class="section-title gold">Herramientas analíticas</h3>
+          <h3 class="section-title gold" spellcheck="false">Herramientas analíticas</h3>
           <ul class="bullet-list gold">
-            <li><strong>DAFO:</strong> diagnóstico situacional (Debilidades, Amenazas, Fortalezas, Oportunidades)</li>
-            <li><strong>CAME:</strong> respuesta estratégica (Corregir, Afrontar, Mantener, Explotar)</li>
-            <li><strong>Indicadores DTI:</strong> seguimiento cuantitativo de cada eje</li>
+            <li spellcheck="false"><strong>FODA:</strong> diagnóstico situacional (Debilidades, Amenazas, Fortalezas, Oportunidades)</li>
+            <li spellcheck="false"><strong>CAME:</strong> respuesta estratégica (Corregir, Afrontar, Mantener, Explotar)</li>
+            <li spellcheck="false"><strong>Indicadores DTI:</strong> seguimiento cuantitativo de cada eje</li>
           </ul>
         </div>
       </div>
@@ -929,7 +987,7 @@
 
     <button class="toggle-orador" onclick="toggleOrador(this)">📋 Notas del orador</button>
     <div class="orador-content">
-      <div class="orador-box">
+      <div class="orador-box" spellcheck="false">
         <div class="orador-label">Notas del orador · 1 min</div>
         La metodología CAME transforma los hallazgos del DAFO en respuestas estratégicas concretas: si el DAFO detecta que la señalización es deficiente (debilidad), el CAME dice "Corregir → incorporar señalización accesible en recursos prioritarios". No se queda en el diagnóstico. Lo que para Caminito resulta especialmente útil es la tipología de acciones: permite decirle a un comerciante "esto que necesitás hacer es una mejora rápida, cuesta poco y da resultado visible en 30 días", y simultáneamente decirle al gobierno "esto otro es acción estratégica, requiere planificación y presupuesto asignado". Esa diferenciación hace el plan manejable.
       </div>
@@ -942,47 +1000,47 @@
 ══════════════════════════════════════════════════════ -->
 <section class="slide" id="slide-6">
   <div class="slide-content">
-    <div class="slide-num">07 / 15</div>
-    <h2 class="slide-title">La demanda: mercado turístico accesible en cifras</h2>
-    <p class="subtitle-text">El argumento económico que Málaga construye para justificar la inversión en accesibilidad</p>
+    <div class="slide-num" spellcheck="false">07 / 15</div>
+    <h2 class="slide-title" spellcheck="false">La demanda: mercado turístico accesible en cifras</h2>
+    <p class="subtitle-text" spellcheck="false">El argumento económico que Málaga construye para justificar la inversión en accesibilidad</p>
 
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin:20px 0;">
       <div class="card" style="text-align:center; border-top:4px solid var(--azul-claro);">
-        <div class="big-metric"><div class="num">+28%</div><div class="label">Gasto vs. turista sin discapacidad</div></div>
+        <div class="big-metric"><div class="num" spellcheck="false">+28%</div><div class="label" spellcheck="false">Gasto vs. turista sin discapacidad</div></div>
       </div>
       <div class="card" style="text-align:center; border-top:4px solid var(--verde-malaga);">
-        <div class="big-metric"><div class="num">89M</div><div class="label">Personas con req. accesibles en EU</div></div>
+        <div class="big-metric"><div class="num" spellcheck="false">89M</div><div class="label" spellcheck="false">Personas con req. accesibles en EU</div></div>
       </div>
       <div class="card" style="text-align:center; border-top:4px solid var(--acento);">
-        <div class="big-metric"><div class="num">7,5</div><div class="label">Satisfacción con transporte accesible (sobre 10)</div></div>
+        <div class="big-metric"><div class="num" spellcheck="false">7,5</div><div class="label" spellcheck="false">Satisfacción con transporte accesible (sobre 10)</div></div>
       </div>
       <div class="card" style="text-align:center; border-top:4px solid var(--rojo-caminito);">
-        <div class="big-metric"><div class="num">2°</div><div class="label">Tiendas/comercios: el eslabón peor valorado</div></div>
+        <div class="big-metric"><div class="num" spellcheck="false">2°</div><div class="label" spellcheck="false">Tiendas/comercios: el eslabón peor valorado</div></div>
       </div>
     </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
       <div class="card card-accent-green">
-        <h3 class="section-title green">Comportamiento del turista accesible (Málaga)</h3>
+        <h3 class="section-title green" spellcheck="false">Comportamiento del turista accesible (Málaga)</h3>
         <ul class="bullet-list green">
-          <li><strong>7 de cada 10</strong> organizan el viaje por Internet — la información digital accesible es decisiva</li>
-          <li>El <strong>66%</strong> se aloja en hotel, no en casa de familiares</li>
-          <li>Los comentarios de otros turistas con discapacidad son el principal criterio de selección del destino</li>
-          <li>Sol y playa (56%) y cultura (46%) son las principales motivaciones — ambos relevantes para Caminito</li>
+          <li spellcheck="false"><strong>7 de cada 10</strong> organizan el viaje por Internet — la información digital accesible es decisiva</li>
+          <li spellcheck="false">El <strong>66%</strong> se aloja en hotel, no en casa de familiares</li>
+          <li spellcheck="false">Los comentarios de otros turistas con discapacidad son el principal criterio de selección del destino</li>
+          <li spellcheck="false">Sol y playa (56%) y cultura (46%) son las principales motivaciones — ambos relevantes para Caminito</li>
         </ul>
       </div>
       <div class="card card-accent-red">
-        <h3 class="section-title red">Implicancias para Caminito</h3>
+        <h3 class="section-title red" spellcheck="false">Implicancias para Caminito</h3>
         <ul class="bullet-list red">
-          <li>Si el mercado accesible gasta 28% más, <strong>Caminito está perdiendo ingresos reales</strong> por cada visitante con discapacidad que no puede acceder bien</li>
-          <li>Las reseñas negativas de accesibilidad en TripAdvisor / Google son el freno más poderoso para atraer este segmento</li>
-          <li>Mejorar comercios (el eslabón peor valorado) tendría impacto directo en la percepción del circuito</li>
-          <li>Buenos Aires atrae turistas de EE.UU. (19%) y Brasil (16%): mercados con alta proporción de turistas senior</li>
+          <li spellcheck="false">Si el mercado accesible gasta 28% más, Caminito está perdiendo ingresos reales por cada visitante con discapacidad que no puede acceder bien</li>
+          <li spellcheck="false">Las reseñas negativas de accesibilidad en TripAdvisor / Google son el freno más poderoso para atraer este segmento</li>
+          <li spellcheck="false">Mejorar comercios (el eslabón peor valorado) tendría impacto directo en la percepción del circuito</li>
+          <li spellcheck="false">Buenos Aires atrae turistas de EE.UU. (19%) y Brasil (16%): mercados con alta proporción de turistas senior</li>
         </ul>
       </div>
     </div>
 
-    <div class="highlight-box" style="margin-top:16px;">
+    <div class="highlight-box" style="margin-top:16px;" spellcheck="false">
       <strong>Reposicionamiento conceptual clave:</strong> La accesibilidad no es solo cumplimiento normativo. Para Málaga — y potencialmente para Caminito — es <em>estrategia de captación y fidelización de un segmento de alto valor con demanda creciente</em>.
     </div>
   </div>
@@ -994,52 +1052,53 @@
 <section class="slide" id="slide-7">
   <div class="slide-split">
     <div>
-      <div class="slide-num">08 / 15</div>
-      <h2 class="slide-title">Accesibilidad = Competitividad + Derecho</h2>
-      <p class="subtitle-text">El triángulo de argumentos que legitima la inversión en accesibilidad turística</p>
+      <div class="slide-num" spellcheck="false">08 / 15</div>
+      <h2 class="slide-title" spellcheck="false">Accesibilidad = Competitividad + Derecho</h2>
+      <p class="subtitle-text" spellcheck="false">El triángulo de argumentos que legitima la inversión en accesibilidad turística</p>
 
       <div class="card card-accent-top" style="margin-top:20px;">
-        <h3 class="section-title">⚖️ Argumento de derechos</h3>
+        <h3 class="section-title" spellcheck="false">⚖️ Argumento de derechos</h3>
         <ul class="bullet-list">
-          <li>Convención ONU sobre Derechos de las Personas con Discapacidad (rango constitucional en Argentina)</li>
-          <li>Ley 25.643 de Turismo Accesible: obliga a prestadores a adecuarse al diseño universal</li>
-          <li>El derecho al turismo no es opcional: es mandato que el estado debe garantizar</li>
+          <li spellcheck="false">Convención ONU sobre Derechos de las Personas con Discapacidad (rango constitucional en Argentina)</li>
+          <li spellcheck="false">Ley 25.643 de Turismo Accesible: obliga a prestadores a adecuarse al diseño universal</li>
+          <li spellcheck="false">El derecho al turismo no es opcional: es mandato que el estado debe garantizar</li>
         </ul>
       </div>
       <div class="card card-accent-green" style="margin-top:16px;">
-        <h3 class="section-title green">📈 Argumento de mercado</h3>
+        <h3 class="section-title green" spellcheck="false">📈 Argumento de mercado</h3>
         <ul class="bullet-list green">
-          <li>Segmento accesible crece 20% interanual proyectado hasta 2030 en Europa</li>
-          <li>Alto nivel de fidelización: si el destino cumple expectativas, regresa y recomienda</li>
-          <li>Viaja con acompañantes: cada turista con discapacidad trae 1,5–2 personas adicionales</li>
+          <li spellcheck="false">Segmento accesible crece 20% interanual proyectado hasta 2030 en Europa</li>
+          <li spellcheck="false">Alto nivel de fidelización: si el destino cumple expectativas, regresa y recomienda</li>
+          <li spellcheck="false">Viaja con acompañantes: cada turista con discapacidad trae 1,5–2 personas adicionales</li>
         </ul>
       </div>
       <div class="card card-accent-gold" style="margin-top:16px;">
-        <h3 class="section-title gold">🏙️ Argumento de calidad urbana</h3>
+        <h3 class="section-title gold" spellcheck="false">🏙️ Argumento de calidad urbana</h3>
         <ul class="bullet-list gold">
-          <li>Accesibilidad mejora la experiencia de TODOS: padres con cochecitos, adultos mayores, personas lesionadas</li>
-          <li>Mejora la calidad del espacio público para residentes y turistas sin distinción</li>
-          <li>Posiciona al destino en rankings de ciudades sostenibles e inclusivas</li>
+          <li spellcheck="false">Accesibilidad mejora la experiencia de TODOS: padres con cochecitos, adultos mayores, personas lesionadas</li>
+          <li spellcheck="false">Mejora la calidad del espacio público para residentes y turistas sin distinción</li>
+          <li spellcheck="false">Posiciona al destino en rankings de ciudades sostenibles e inclusivas</li>
         </ul>
       </div>
     </div>
     <div>
-      <div class="highlight-box blue" style="margin-top:60px;">
+      <div class="highlight-box blue" style="margin-top:60px;" spellcheck="false">
         <strong>La lección de Málaga:</strong> Presentar la accesibilidad solo como obligación normativa genera resistencia. Presentarla como los tres argumentos simultáneamente genera consenso entre gobierno, sector privado y sociedad civil.
       </div>
-      <div class="card" style="margin-top:20px; border-top:4px solid var(--azul-profundo);">
-        <h3 class="section-title">Costo de la inaccesibilidad</h3>
-        <p style="font-size:13px; line-height:1.6; margin-bottom:14px;">En la UE, la falta de accesibilidad representa <strong>€142.000 millones perdidos al año</strong> en el sector turístico. A escala de Caminito:</p>
+      
+<div class="card" style="margin-top:16px; border-top:4px solid var(--azul-profundo);">
+        <h3 class="section-title" spellcheck="false">Costo de la inaccesibilidad</h3>
+        <p style="font-size:13px; line-height:1.6; margin-bottom:14px;" spellcheck="false">En la UE, la falta de accesibilidad representa <strong>€142.000 millones perdidos al año</strong> en el sector turístico. A escala de Caminito:</p>
         <ul class="bullet-list" style="font-size:13px;">
-          <li>Visitante con discapacidad que no puede recorrer el circuito completo: menor tiempo de permanencia → menor consumo en comercios</li>
-          <li>Reseña negativa de accesibilidad en plataforma digital: inhibe decisión de viaje de comunidad amplia</li>
-          <li>Turista senior de EE.UU. (gasto ~$950 USD) que descarta Caminito por barreras: pérdida de ingreso turístico directo</li>
+          <li spellcheck="false">Visitante con discapacidad que no puede recorrer el circuito completo: menor tiempo de permanencia → menor consumo en comercios</li>
+          <li spellcheck="false">Reseña negativa de accesibilidad en plataforma digital: inhibe decisión de viaje de comunidad amplia</li>
+          <li spellcheck="false">Turista senior de EE.UU. (gasto ~$950 USD) que descarta Caminito por barreras: pérdida de ingreso turístico directo</li>
         </ul>
       </div>
 
       <button class="toggle-orador" onclick="toggleOrador(this)">📋 Notas del orador</button>
       <div class="orador-content">
-        <div class="orador-box">
+        <div class="orador-box" spellcheck="false">
           <div class="orador-label">Notas del orador · 1 min</div>
           Este slide es el núcleo del argumento político. Cuando se le presenta a un comerciante de La Boca el argumento de "derechos", puede ignorarlo. Cuando se le presenta el argumento de mercado — que el turista con discapacidad gasta 28% más y viaja con acompañantes — entonces le habla en su idioma. Cuando se agrega el de calidad urbana — que mejorar el acceso al comercio mejora su reputación digital — entonces tiene motivos propios para adherir. Ese encadenamiento de argumentos es lo que Málaga utiliza para construir consenso multiactor.
         </div>
@@ -1053,9 +1112,9 @@
 ══════════════════════════════════════════════════════ -->
 <section class="slide" id="slide-8">
   <div class="slide-content">
-    <div class="slide-num">09 / 15</div>
-    <h2 class="slide-title">Málaga y Caminito: similitudes estructurales y diferencias de contexto</h2>
-    <p class="subtitle-text">La transferencia metodológica es viable no porque sean iguales, sino porque comparten desafíos de gestión equivalentes</p>
+    <div class="slide-num" spellcheck="false">09 / 15</div>
+    <h2 class="slide-title" spellcheck="false">Málaga y Caminito: similitudes estructurales y diferencias de contexto</h2>
+    <p class="subtitle-text" spellcheck="false">La transferencia metodológica es viable no porque sean iguales, sino porque comparten desafíos de gestión equivalentes</p>
 
     <table class="compare-table" style="margin-top:16px;">
       <thead>
@@ -1067,39 +1126,40 @@
       </thead>
       <tbody>
         <tr>
-          <td>Tipo de destino</td>
-          <td class="malaga">Ciudad cultural mediterránea, 578.000 hab., 4,7M visitantes/año</td>
-          <td class="caminito">Circuito urbano patrimonial en La Boca, CABA, ~1M visitantes/año</td>
+          <td spellcheck="false">Tipo de destino</td>
+          <td class="malaga" spellcheck="false">Ciudad cultural mediterránea, 578.000 hab., 4,7M visitantes/año</td>
+          <td class="caminito" spellcheck="false">Circuito urbano patrimonial en La Boca, CABA, ~1M visitantes/año</td>
         </tr>
         <tr>
-          <td>Patrimonio</td>
-          <td class="malaga">40 museos, Alcazaba, Catedral, barrios históricos — concentración cultural alta</td>
-          <td class="caminito">Paseo peatonal, arte callejero, tango, arquitectura conventillera — marca internacional fuerte</td>
+          <td spellcheck="false">Patrimonio</td>
+          <td class="malaga" spellcheck="false">40 museos, Alcazaba, Catedral, barrios históricos — concentración cultural alta</td>
+          <td class="caminito" spellcheck="false">Paseo peatonal, arte callejero, tango, arquitectura conventillera — marca internacional fuerte</td>
         </tr>
         <tr>
-          <td>Infraestructura</td>
-          <td class="malaga">Histórica con adecuaciones progresivas. Presupuesto municipal limitado</td>
-          <td class="caminito">Barrio histórico de La Boca con intervenciones previas parciales (Programa Caminabilidad)</td>
+          <td spellcheck="false">Infraestructura</td>
+          <td class="malaga" spellcheck="false">Histórica con adecuaciones progresivas. Presupuesto municipal limitado</td>
+          <td class="caminito" spellcheck="false">Barrio histórico de La Boca con intervenciones previas parciales (Programa Caminabilidad)</td>
         </tr>
         <tr>
-          <td>Accesibilidad actual</td>
-          <td class="malaga">Avanzada en implantación física. Brecha en digital y comercios</td>
-          <td class="caminito">Barreras físicas documentadas. Sin línea base, sin datos de demanda, sin mecanismo de seguimiento</td>
+          <td spellcheck="false">Accesibilidad actual</td>
+          <td class="malaga" spellcheck="false">Avanzada en implantación física. Brecha en digital y comercios</td>
+          <td class="caminito" spellcheck="false">Barreras físicas documentadas. Sin línea base, sin datos de demanda, sin mecanismo de seguimiento</td>
         </tr>
         <tr>
-          <td>Marco institucional</td>
-          <td class="malaga">Ayuntamiento con Área de Turismo y Sección de Accesibilidad separadas pero coordinadas</td>
-          <td class="caminito">Ente de Turismo CABA, Ministerio Espacio Público, Comuna 4 — sin coordinación formalizada sobre accesibilidad</td>
+          <td spellcheck="false">Marco institucional</td>
+          <td class="malaga" spellcheck="false">Ayuntamiento con Área de Turismo y Sección de Accesibilidad separadas pero coordinadas</td>
+          <td class="caminito" spellcheck="false">Ente de Turismo CABA, Ministerio Espacio Público, Comuna 4 — sin coordinación formalizada sobre accesibilidad</td>
         </tr>
         <tr>
-          <td>Ventaja diferencial</td>
-          <td class="malaga">Temperatura todo el año, diversidad de producto, 40 años de turismo masivo</td>
-          <td class="caminito">Marca global única (Caminito = Buenos Aires), concentración geográfica que facilita intervención sistémica</td>
+          <td spellcheck="false">Ventaja diferencial</td>
+          <td class="malaga" spellcheck="false">Temperatura todo el año, diversidad de producto, 40 años de turismo masivo</td>
+          <td class="caminito" spellcheck="false">Marca global única (Caminito = Buenos Aires), concentración geográfica que facilita intervención sistémica</td>
         </tr>
       </tbody>
     </table>
 
-    <div class="highlight-box" style="margin-top:20px;">
+    
+<div class="highlight-box" style="margin-top:16px;" spellcheck="false">
       <strong>Conclusión comparativa:</strong> Caminito tiene una ventaja que Málaga no tuvo: es un circuito acotado. Eso significa que puede implementar un diagnóstico integral y un plan de accesibilidad con mayor rapidez y menor complejidad que toda una ciudad. La escala menor <em>es una oportunidad, no una limitación</em>.
     </div>
   </div>
@@ -1111,35 +1171,35 @@
 <section class="slide" id="slide-9">
   <div class="slide-split">
     <div>
-      <div class="slide-num">10 / 15</div>
-      <h2 class="slide-title">Transferencia I: diagnóstico integrado para Caminito</h2>
-      <p class="subtitle-text">Adaptar el modelo multimodal de Málaga a la escala del circuito</p>
+      <div class="slide-num" spellcheck="false">10 / 15</div>
+      <h2 class="slide-title" spellcheck="false">Transferencia I: diagnóstico integrado para Caminito</h2>
+      <p class="subtitle-text" spellcheck="false">Adaptar el modelo multimodal de Málaga a la escala del circuito</p>
 
       <div class="card card-accent-red" style="margin-top:20px;">
-        <h3 class="section-title red">Cuatro fuentes adaptadas a Caminito</h3>
+        <h3 class="section-title red" spellcheck="false">Cuatro fuentes adaptadas a Caminito</h3>
         <div class="steps">
           <div class="step">
             <div class="step-num" style="background:var(--rojo-caminito);">1</div>
-            <div class="step-text"><strong>Análisis documental</strong> Ley 962 CABA, Ley 25.643 nacional, Plan Estratégico Turismo CABA, Observatorio Turístico CABA, informes del Programa Caminabilidad</div>
+            <div class="step-text" spellcheck="false"><strong>Análisis documental</strong> Ley 962 CABA, Ley 25.643 nacional, Plan Estratégico Turismo CABA, Observatorio Turístico CABA, informes del Programa Caminabilidad</div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--rojo-caminito);">2</div>
-            <div class="step-text"><strong>Entrevistas a actores clave</strong> Ente de Turismo CABA, Dirección de Accesibilidad, Comuna 4, comerciantes de La Boca, guías turísticos, operadores receptivos</div>
+            <div class="step-text" spellcheck="false"><strong>Entrevistas a actores clave</strong> Ente de Turismo CABA, Dirección de Accesibilidad, Comuna 4, comerciantes de La Boca, guías turísticos, operadores receptivos</div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--rojo-caminito);">3</div>
-            <div class="step-text"><strong>Encuesta dirigida</strong> Visitantes con discapacidad y turistas senior que transitaron Caminito. Asociaciones de accesibilidad de CABA</div>
+            <div class="step-text" spellcheck="false"><strong>Encuesta dirigida</strong> Visitantes con discapacidad y turistas senior que transitaron Caminito. Asociaciones de accesibilidad de CABA</div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--rojo-caminito);">4</div>
-            <div class="step-text"><strong>Trabajo de campo in situ</strong> Evaluación técnica de 8-10 recursos prioritarios del circuito: accesos, circulación, museos, servicios básicos</div>
+            <div class="step-text" spellcheck="false"><strong>Trabajo de campo in situ</strong> Evaluación técnica de 8-10 recursos prioritarios del circuito: accesos, circulación, museos, servicios básicos</div>
           </div>
         </div>
       </div>
     </div>
     <div>
       <div class="card card-accent-red" style="margin-bottom:16px;">
-        <h3 class="section-title red">Recursos prioritarios a auditar</h3>
+        <h3 class="section-title red" spellcheck="false">Recursos prioritarios a auditar</h3>
         <div class="pill-row">
           <span class="pill pill-outline-red">Paseo Caminito</span>
           <span class="pill pill-outline-red">Museo Quinquela Martín</span>
@@ -1152,16 +1212,16 @@
         </div>
       </div>
       <div class="card card-accent-gold">
-        <h3 class="section-title gold">Indicadores de línea base (lo que hay que medir HOY)</h3>
+        <h3 class="section-title gold" spellcheck="false">Indicadores de línea base (lo que hay que medir HOY)</h3>
         <ul class="bullet-list gold">
-          <li>Nº de accesos sin escalones / total accesos</li>
-          <li>% de señalización con criterios accesibles</li>
-          <li>Cobertura de baños accesibles (existentes / necesarios)</li>
-          <li>Satisfacción de turistas con discapacidad (escala 1-10)</li>
-          <li>Tiempo de permanencia promedio en el circuito</li>
+          <li spellcheck="false">Nº de accesos sin escalones / total accesos</li>
+          <li spellcheck="false">% de señalización con criterios accesibles</li>
+          <li spellcheck="false">Cobertura de baños accesibles (existentes / necesarios)</li>
+          <li spellcheck="false">Satisfacción de turistas con discapacidad (escala 1-10)</li>
+          <li spellcheck="false">Tiempo de permanencia promedio en el circuito</li>
         </ul>
       </div>
-      <div class="highlight-box red" style="margin-top:14px;">
+      <div class="highlight-box red" style="margin-top:14px;" spellcheck="false">
         <strong>Por qué es urgente:</strong> Sin línea base, no hay forma de demostrar que las intervenciones tienen impacto. Eso vuelve invisible el progreso y dificulta la justificación política de nuevos presupuestos.
       </div>
     </div>
@@ -1173,58 +1233,59 @@
 ══════════════════════════════════════════════════════ -->
 <section class="slide" id="slide-10">
   <div class="slide-content">
-    <div class="slide-num">11 / 15</div>
-    <h2 class="slide-title">Transferencia II: arquitectura de gobernanza para Caminito</h2>
-    <p class="subtitle-text">Institucionalizar lo que hoy es informal. La clave es estructura, no solo voluntad</p>
+    <div class="slide-num" spellcheck="false">11 / 15</div>
+    <h2 class="slide-title" spellcheck="false">Transferencia II: arquitectura de gobernanza para Caminito</h2>
+    <p class="subtitle-text" spellcheck="false">Institucionalizar lo que hoy es informal. La clave es estructura, no solo voluntad</p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-top:16px;">
       <div class="card card-accent-top" style="border-top-color:var(--azul-profundo);">
         <div class="icon-circle icon-blue">🏛️</div>
         <span class="badge badge-blue" style="margin-bottom:10px;">Nivel estratégico · trimestral</span>
-        <h3 class="section-title" style="margin-top:8px;">Mesa de Gobernanza de Accesibilidad de Caminito</h3>
+        <h3 class="section-title" style="margin-top:8px;" spellcheck="false">Mesa de Gobernanza de Accesibilidad de Caminito</h3>
         <ul class="bullet-list">
-          <li>Ente de Turismo CABA (coordinación)</li>
-          <li>Ministerio de Espacio Público</li>
-          <li>Dirección de Accesibilidad GCBA</li>
-          <li>Comuna 4</li>
-          <li>1 representante comerciantes La Boca</li>
-          <li>1 asociación de personas con discapacidad</li>
+          <li spellcheck="false">Ente de Turismo CABA (coordinación)</li>
+          <li spellcheck="false">Ministerio de Espacio Público</li>
+          <li spellcheck="false">Dirección de Accesibilidad GCBA</li>
+          <li spellcheck="false">Comuna 4</li>
+          <li spellcheck="false">1 representante comerciantes La Boca</li>
+          <li spellcheck="false">1 asociación de personas con discapacidad</li>
         </ul>
         <div style="margin-top:12px; font-size:12px; color:var(--gris-medio);">📋 Función: aprueba estrategia, resuelve conflictos, define presupuesto</div>
       </div>
       <div class="card card-accent-green">
         <div class="icon-circle icon-green">⚙️</div>
         <span class="badge badge-green" style="margin-bottom:10px;">Nivel operativo · mensual</span>
-        <h3 class="section-title green" style="margin-top:8px;">Grupo Técnico de Implementación</h3>
+        <h3 class="section-title green" style="margin-top:8px;" spellcheck="false">Grupo Técnico de Implementación</h3>
         <ul class="bullet-list green">
-          <li>Técnicos de GCBA (obras, accesibilidad)</li>
-          <li>Referente del Ente de Turismo</li>
-          <li>Especialista en accesibilidad turística</li>
-          <li>Representante privado (comercio / operadores)</li>
+          <li spellcheck="false">Técnicos de GCBA (obras, accesibilidad)</li>
+          <li spellcheck="false">Referente del Ente de Turismo</li>
+          <li spellcheck="false">Especialista en accesibilidad turística</li>
+          <li spellcheck="false">Representante privado (comercio / operadores)</li>
         </ul>
         <div style="margin-top:12px; font-size:12px; color:var(--gris-medio);">📋 Función: diseña acciones, coordina implementación, monitorea indicadores</div>
       </div>
       <div class="card card-accent-gold">
         <div class="icon-circle icon-gold">📣</div>
         <span class="badge badge-gold" style="margin-bottom:10px;">Nivel comunicacional · semestral</span>
-        <h3 class="section-title gold" style="margin-top:8px;">Foro Abierto de Caminito Accesible</h3>
+        <h3 class="section-title gold" style="margin-top:8px;" spellcheck="false">Foro Abierto de Caminito Accesible</h3>
         <ul class="bullet-list gold">
-          <li>Evento público con todos los actores</li>
-          <li>Presentación de avances y próximos pasos</li>
-          <li>Espacio de retroalimentación ciudadana</li>
-          <li>Comunicación de compromisos del período</li>
+          <li spellcheck="false">Evento público con todos los actores</li>
+          <li spellcheck="false">Presentación de avances y próximos pasos</li>
+          <li spellcheck="false">Espacio de retroalimentación ciudadana</li>
+          <li spellcheck="false">Comunicación de compromisos del período</li>
         </ul>
         <div style="margin-top:12px; font-size:12px; color:var(--gris-medio);">📋 Función: legitima decisiones, mantiene visibilidad, genera presión positiva</div>
       </div>
     </div>
 
-    <div class="highlight-box" style="margin-top:20px;">
+    
+<div class="highlight-box" style="margin-top:16px;" spellcheck="false">
       <strong>Lección de Málaga aplicada:</strong> El Foro de Turismo de Málaga lleva activo desde 2007 pero sin eje de accesibilidad integrado — eso es identificado como brecha. Para Caminito, integrar accesibilidad <em>desde el inicio</em> evita años de trabajo paralelo y desconectado.
     </div>
 
     <button class="toggle-orador" onclick="toggleOrador(this)">📋 Notas del orador</button>
     <div class="orador-content">
-      <div class="orador-box">
+      <div class="orador-box" spellcheck="false">
         <div class="orador-label">Notas del orador · 1 min</div>
         Una Mesa de Gobernanza no requiere presupuesto significativo para crearse. Requiere decisión política del Ente de Turismo CABA y la designación de un referente con mandato claro. Eso puede ocurrir en 30-60 días. Lo que Málaga nos muestra es que sin esa estructura, las mejoras son puntuales y no se acumulan. Con ella, cada gestión deja un avance documentado para la siguiente. La propuesta de tres niveles (estratégico, operativo, comunicacional) no es burocracia: es la diferencia entre "hacer reuniones" y "tomar decisiones que se implementan".
       </div>
@@ -1238,49 +1299,49 @@
 <section class="slide" id="slide-11">
   <div class="slide-split">
     <div>
-      <div class="slide-num">12 / 15</div>
-      <h2 class="slide-title">Transferencia III: visión y plan estratégico para Caminito</h2>
-      <p class="subtitle-text">Aplicar la cadena: DAFO/CAME → Visión → Objetivos → Tipología de acciones</p>
+      <div class="slide-num" spellcheck="false">12 / 15</div>
+      <h2 class="slide-title" spellcheck="false">Transferencia III: visión y plan estratégico para Caminito</h2>
+      <p class="subtitle-text" spellcheck="false">Aplicar la cadena: DAFO/CAME → Visión → Objetivos → Tipología de acciones</p>
 
-      <div class="highlight-box blue" style="margin-top:20px;">
+      <div class="highlight-box blue" style="margin-top:20px;" spellcheck="false">
         <strong>Visión propuesta para debate:</strong><br>
         <em>"Consolidar a Caminito como el primer circuito turístico urbano accesible de referencia en Buenos Aires, donde patrimonio cultural, experiencia de calidad y accesibilidad universal convergen."</em>
       </div>
 
       <div class="card card-accent-top" style="margin-top:16px;">
-        <h3 class="section-title">Objetivos específicos derivados</h3>
+        <h3 class="section-title" spellcheck="false">Objetivos específicos derivados</h3>
         <ul class="bullet-list">
-          <li>Eliminar barreras físicas críticas en los 8-10 recursos prioritarios</li>
-          <li>Integrar herramientas de comunicación accesible (señalética, audioguías, QR informativos)</li>
-          <li>Extender tiempo de permanencia en el circuito mediante servicios complementarios</li>
-          <li>Aumentar la satisfacción de visitantes con discapacidad de la línea base a 7+/10</li>
-          <li>Establecer sello "Comercio Accesible de Caminito" para prestadores adheridos</li>
+          <li spellcheck="false">Eliminar barreras físicas críticas en los 8-10 recursos prioritarios</li>
+          <li spellcheck="false">Integrar herramientas de comunicación accesible (señalética, audioguías, QR informativos)</li>
+          <li spellcheck="false">Extender tiempo de permanencia en el circuito mediante servicios complementarios</li>
+          <li spellcheck="false">Aumentar la satisfacción de visitantes con discapacidad de la línea base a 7+/10</li>
+          <li spellcheck="false">Establecer sello "Comercio Accesible de Caminito" para prestadores adheridos</li>
         </ul>
       </div>
     </div>
     <div>
       <div class="card card-accent-red" style="margin-bottom:16px;">
-        <h3 class="section-title red">Tipología de acciones para Caminito</h3>
+        <h3 class="section-title red" spellcheck="false">Tipología de acciones para Caminito</h3>
         <div class="steps">
           <div class="step">
             <div class="step-num" style="background:#C0392B; font-size:11px;">🚨</div>
-            <div class="step-text"><strong>Alta prioridad</strong> Rampas en accesos principales, baños accesibles en 3 puntos del circuito, información básica en formatos accesibles</div>
+            <div class="step-text" spellcheck="false"><strong>Alta prioridad</strong> Rampas en accesos principales, baños accesibles en 3 puntos del circuito, información básica en formatos accesibles</div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--azul-medio); font-size:11px;">🎯</div>
-            <div class="step-text"><strong>Estratégicas</strong> Circuito Accesible Inteligente con app, audioguías multilingües, sello de comercio accesible, alianza con sector senior</div>
+            <div class="step-text" spellcheck="false"><strong>Estratégicas</strong> Circuito Accesible Inteligente con app, audioguías multilingües, sello de comercio accesible, alianza con sector senior</div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--verde-malaga); font-size:11px;">🔄</div>
-            <div class="step-text"><strong>Mejora continua</strong> Capacitación anual a comerciantes y guías, monitoreo semestral de indicadores, actualización de información digital</div>
+            <div class="step-text" spellcheck="false"><strong>Mejora continua</strong> Capacitación anual a comerciantes y guías, monitoreo semestral de indicadores, actualización de información digital</div>
           </div>
           <div class="step">
             <div class="step-num" style="background:var(--acento); font-size:11px;">⚡</div>
-            <div class="step-text"><strong>Quick wins</strong> Mapa accesible impreso del circuito, QR en puntos clave, asistencia accesible en Oficina de Turismo de La Boca</div>
+            <div class="step-text" spellcheck="false"><strong>Quick wins</strong> Mapa accesible impreso del circuito, QR en puntos clave, asistencia accesible en Oficina de Turismo de La Boca</div>
           </div>
         </div>
       </div>
-      <div class="highlight-box red">
+      <div class="highlight-box red" spellcheck="false">
         <strong>DAFO inicial de Caminito:</strong> Fortaleza = marca internacional única. Debilidad = ausencia de datos y gobernanza. Oportunidad = crecimiento de turismo senior de EE.UU. Amenaza = reseñas negativas de accesibilidad que disuaden visitas.
       </div>
     </div>
@@ -1292,9 +1353,9 @@
 ══════════════════════════════════════════════════════ -->
 <section class="slide" id="slide-12">
   <div class="slide-content">
-    <div class="slide-num">13 / 15</div>
-    <h2 class="slide-title">Matriz de transferencia metodológica</h2>
-    <p class="subtitle-text">¿Qué elementos de Málaga son directamente transferibles, cuáles requieren adaptación y cuáles son irrelevantes?</p>
+    <div class="slide-num" spellcheck="false">13 / 15</div>
+    <h2 class="slide-title" spellcheck="false">Matriz de transferencia metodológica</h2>
+    <p class="subtitle-text" spellcheck="false">¿Qué elementos de Málaga son directamente transferibles, cuáles requieren adaptación y cuáles son irrelevantes?</p>
 
     <table class="compare-table" style="margin-top:16px;">
       <thead>
@@ -1307,51 +1368,51 @@
       </thead>
       <tbody>
         <tr>
-          <td>Diagnóstico</td>
-          <td class="malaga">4 fuentes (doc. + entrevistas + encuesta + campo). 20 recursos auditados in situ. DAFO/CAME</td>
-          <td class="caminito">Misma estructura. 8-10 recursos del circuito. Escala menor, misma profundidad</td>
-          <td style="background:#E8F0FB; color:var(--azul-medio); text-align:center; font-weight:600;">✅ Alta</td>
+          <td spellcheck="false">Diagnóstico</td>
+          <td class="malaga" spellcheck="false">4 fuentes (doc. + entrevistas + encuesta + campo). 20 recursos auditados in situ. DAFO/CAME</td>
+          <td class="caminito" spellcheck="false">Misma estructura. 8-10 recursos del circuito. Escala menor, misma profundidad</td>
+          <td style="background:#E8F0FB; color:var(--azul-medio); text-align:center; font-weight:600;" spellcheck="false">✅ Alta</td>
         </tr>
         <tr>
-          <td>Gobernanza</td>
-          <td class="malaga">2 áreas municipales coordinadas + Foro Turismo + Consejo Accesibilidad + encuesta ciudadana</td>
-          <td class="caminito">Mesa de Gobernanza 3 niveles (estratégico / operativo / comunicacional) con actores clave del circuito</td>
-          <td style="background:#E8F0FB; color:var(--azul-medio); text-align:center; font-weight:600;">✅ Alta</td>
+          <td spellcheck="false">Gobernanza</td>
+          <td class="malaga" spellcheck="false">2 áreas municipales coordinadas + Foro Turismo + Consejo Accesibilidad + encuesta ciudadana</td>
+          <td class="caminito" spellcheck="false">Mesa de Gobernanza 3 niveles (estratégico / operativo / comunicacional) con actores clave del circuito</td>
+          <td style="background:#E8F0FB; color:var(--azul-medio); text-align:center; font-weight:600;" spellcheck="false">✅ Alta</td>
         </tr>
         <tr>
-          <td>Visión y estrategia</td>
-          <td class="malaga">"Destino inclusivo de referencia" → alineado con PET y DTI</td>
-          <td class="caminito">"Circuito accesible de referencia en Buenos Aires" → alineado con Plan Turismo CABA</td>
-          <td style="background:#FDF3DC; color:#8B6010; text-align:center; font-weight:600;">⚠️ Adaptar</td>
+          <td spellcheck="false">Visión y estrategia</td>
+          <td class="malaga" spellcheck="false">"Destino inclusivo de referencia" → alineado con PET y DTI</td>
+          <td class="caminito" spellcheck="false">"Circuito accesible de referencia en Buenos Aires" → alineado con Plan Turismo CABA</td>
+          <td style="background:#FDF3DC; color:#8B6010; text-align:center; font-weight:600;" spellcheck="false">⚠️ Adaptar</td>
         </tr>
         <tr>
-          <td>Marco normativo</td>
-          <td class="malaga">UNE 178501 (DTI), normativa nacional discapacidad, Ordenanza municipal accesibilidad</td>
-          <td class="caminito">Ley 25.643, Ley 962 CABA, normas IRAM. No requiere crear normativa nueva — alinear con existente</td>
-          <td style="background:#E8F0FB; color:var(--azul-medio); text-align:center; font-weight:600;">✅ Alta</td>
+          <td spellcheck="false">Marco normativo</td>
+          <td class="malaga" spellcheck="false">UNE 178501 (DTI), normativa nacional discapacidad, Ordenanza municipal accesibilidad</td>
+          <td class="caminito" spellcheck="false">Ley 25.643, Ley 962 CABA, normas IRAM. No requiere crear normativa nueva — alinear con existente</td>
+          <td style="background:#E8F0FB; color:var(--azul-medio); text-align:center; font-weight:600;" spellcheck="false">✅ Alta</td>
         </tr>
         <tr>
-          <td>Tipología acciones</td>
-          <td class="malaga">Alta prioridad / Estratégicas / Mejora continua / Rápidas — con temporalidades 2020-2025-2030-2035</td>
-          <td class="caminito">Misma clasificación con horizontes 6 meses / 1 año / 2 años / permanente</td>
-          <td style="background:#E8F0FB; color:var(--azul-medio); text-align:center; font-weight:600;">✅ Alta</td>
+          <td spellcheck="false">Tipología acciones</td>
+          <td class="malaga" spellcheck="false">Alta prioridad / Estratégicas / Mejora continua / Rápidas — con temporalidades 2020-2025-2030-2035</td>
+          <td class="caminito" spellcheck="false">Misma clasificación con horizontes 6 meses / 1 año / 2 años / permanente</td>
+          <td style="background:#E8F0FB; color:var(--azul-medio); text-align:center; font-weight:600;" spellcheck="false">✅ Alta</td>
         </tr>
         <tr>
-          <td>Sello distintivo</td>
-          <td class="malaga">Sello municipal de accesibilidad para establecimientos turísticos privados</td>
-          <td class="caminito">"Comercio Accesible Caminito" — incentivo voluntario con reconocimiento en plataformas digitales</td>
-          <td style="background:#E8F5EF; color:var(--verde-malaga); text-align:center; font-weight:600;">✅ Directa</td>
+          <td spellcheck="false">Sello distintivo</td>
+          <td class="malaga" spellcheck="false">Sello municipal de accesibilidad para establecimientos turísticos privados</td>
+          <td class="caminito" spellcheck="false">"Comercio Accesible Caminito" — incentivo voluntario con reconocimiento en plataformas digitales</td>
+          <td style="background:#E8F5EF; color:var(--verde-malaga); text-align:center; font-weight:600;" spellcheck="false">✅ Directa</td>
         </tr>
         <tr>
-          <td>Escala temporal</td>
-          <td class="malaga">Itinerarios accesibles planificados a corto (2020), medio (2026) y largo plazo (2031)</td>
-          <td class="caminito">Planificación en 3 horizontes adaptados a escala de circuito urbano</td>
-          <td style="background:#FDF3DC; color:#8B6010; text-align:center; font-weight:600;">⚠️ Adaptar</td>
+          <td spellcheck="false">Escala temporal</td>
+          <td class="malaga" spellcheck="false">Itinerarios accesibles planificados a corto (2020), medio (2026) y largo plazo (2031)</td>
+          <td class="caminito" spellcheck="false">Planificación en 3 horizontes adaptados a escala de circuito urbano</td>
+          <td style="background:#FDF3DC; color:#8B6010; text-align:center; font-weight:600;" spellcheck="false">⚠️ Adaptar</td>
         </tr>
       </tbody>
     </table>
 
-    <div class="highlight-box" style="margin-top:16px;">
+    <div class="highlight-box" style="margin-top:16px;" spellcheck="false">
       <strong>Insight central:</strong> La mayoría de los instrumentos metodológicos de Málaga son transferibles con alta fidelidad. La adaptación requerida es de escala (ciudad → circuito) y de contexto institucional (Ayuntamiento → múltiples actores CABA).
     </div>
   </div>
@@ -1362,32 +1423,32 @@
 ══════════════════════════════════════════════════════ -->
 <section class="slide" id="slide-13">
   <div class="slide-content">
-    <div class="slide-num">14 / 15</div>
-    <h2 class="slide-title">Brechas críticas y oportunidades concretas para Caminito</h2>
-    <p class="subtitle-text">Lo que Málaga revela sobre las prioridades más urgentes del circuito</p>
+    <div class="slide-num" spellcheck="false">14 / 15</div>
+    <h2 class="slide-title" spellcheck="false">Brechas críticas y oportunidades concretas para Caminito</h2>
+    <p class="subtitle-text" spellcheck="false">Lo que Málaga revela sobre las prioridades más urgentes del circuito</p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:16px;">
       <div>
-        <h3 class="section-title red">🔴 Brechas identificadas</h3>
+        <h3 class="section-title red" spellcheck="false">🔴 Brechas identificadas</h3>
         <div class="card" style="border-left:4px solid var(--rojo-caminito);">
           <ul class="bullet-list red" style="gap:16px;">
-            <li><strong>Sin diagnóstico base documentado:</strong> No hay métricas de punto de partida que justifiquen y prioricen inversiones. Todo parece urgente cuando no hay datos.</li>
-            <li><strong>Gobernanza fragmentada:</strong> Decisiones de turismo, espacio público y accesibilidad ocurren en silos. Las intervenciones no se acumulan.</li>
-            <li><strong>Comercios: el eslabón más débil:</strong> Igual que en Málaga, los comercios son el punto de la cadena de valor con peor desempeño. Y son el corazón económico de Caminito.</li>
-            <li><strong>Accesibilidad digital ausente:</strong> La información sobre accesibilidad en Caminito no está disponible online en formatos accesibles. Frena la decisión de visita.</li>
-            <li><strong>Sin sello ni incentivo privado:</strong> El sector privado no tiene mecanismo de reconocimiento ni incentivo para adherir voluntariamente.</li>
+            <li spellcheck="false"><strong>Sin diagnóstico base documentado:</strong> No hay métricas de punto de partida que justifiquen y prioricen inversiones. Todo parece urgente cuando no hay datos.</li>
+            <li spellcheck="false"><strong>Gobernanza fragmentada:</strong> Decisiones de turismo, espacio público y accesibilidad ocurren en silos. Las intervenciones no se acumulan.</li>
+            <li spellcheck="false"><strong>Comercios: el eslabón más débil:</strong> Igual que en Málaga, los comercios son el punto de la cadena de valor con peor desempeño. Y son el corazón económico de Caminito.</li>
+            <li spellcheck="false"><strong>Accesibilidad digital ausente:</strong> La información sobre accesibilidad en Caminito no está disponible online en formatos accesibles. Frena la decisión de visita.</li>
+            <li spellcheck="false"><strong>Sin sello ni incentivo privado:</strong> El sector privado no tiene mecanismo de reconocimiento ni incentivo para adherir voluntariamente.</li>
           </ul>
         </div>
       </div>
       <div>
-        <h3 class="section-title green">🟢 Oportunidades concretas</h3>
+        <h3 class="section-title green" spellcheck="false">🟢 Oportunidades concretas</h3>
         <div class="card" style="border-left:4px solid var(--verde-malaga);">
           <ul class="bullet-list green" style="gap:16px;">
-            <li><strong>Escala manejable:</strong> Caminito es un circuito acotado. Se puede implementar diagnóstico completo en 3-4 meses, a diferencia de Málaga que auditó toda una ciudad.</li>
-            <li><strong>Marca internacional preexistente:</strong> Caminito ya tiene posicionamiento global. Agregar "accesible" a esa marca amplía mercado sin construir identidad desde cero.</li>
-            <li><strong>Turismo senior de EE.UU. en crecimiento:</strong> El segmento con mayor gasto en CABA (≈$950 USD) es el que tiene mayor proporción de viajeros senior con requerimientos accesibles.</li>
-            <li><strong>Normativa nacional ya disponible:</strong> Argentina tiene Ley 25.643 de Turismo Accesible y Ley 962 de Accesibilidad CABA. No hay que crear marco legal: hay que usarlo.</li>
-            <li><strong>Ventana de visibilidad:</strong> Ser el primer circuito urbano accesible de Buenos Aires en declararlo explícitamente genera cobertura mediática y diferenciación competitiva inmediata.</li>
+            <li spellcheck="false"><strong>Escala manejable:</strong> Caminito es un circuito acotado. Se puede implementar diagnóstico completo en 3-4 meses, a diferencia de Málaga que auditó toda una ciudad.</li>
+            <li spellcheck="false"><strong>Marca internacional preexistente:</strong> Caminito ya tiene posicionamiento global. Agregar "accesible" a esa marca amplía mercado sin construir identidad desde cero.</li>
+            <li spellcheck="false"><strong>Turismo senior de EE.UU. en crecimiento:</strong> El segmento con mayor gasto en CABA (≈$950 USD) es el que tiene mayor proporción de viajeros senior con requerimientos accesibles.</li>
+            <li spellcheck="false"><strong>Normativa nacional ya disponible:</strong> Argentina tiene Ley 25.643 de Turismo Accesible y Ley 962 de Accesibilidad CABA. No hay que crear marco legal: hay que usarlo.</li>
+            <li spellcheck="false"><strong>Ventana de visibilidad:</strong> Ser el primer circuito urbano accesible de Buenos Aires en declararlo explícitamente genera cobertura mediática y diferenciación competitiva inmediata.</li>
           </ul>
         </div>
       </div>
@@ -1400,68 +1461,68 @@
 ══════════════════════════════════════════════════════ -->
 <section class="slide" id="slide-14">
   <div class="slide-content">
-    <div class="slide-num">15 / 15</div>
-    <h2 class="slide-title">Conclusiones y roadmap de implementación para Caminito</h2>
-    <p class="subtitle-text">Lo que aprendemos de Málaga se puede activar. La metodología está disponible.</p>
+    <div class="slide-num" spellcheck="false">15 / 15</div>
+    <h2 class="slide-title" spellcheck="false">Conclusiones y roadmap de implementación para Caminito</h2>
+    <p class="subtitle-text" spellcheck="false">Lo que aprendemos de Málaga se puede activar. La metodología está disponible.</p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:16px; margin-bottom:24px;">
       <div class="card card-accent-top">
-        <h3 class="section-title">3 aprendizajes metodológicos centrales de Málaga</h3>
+        <h3 class="section-title" spellcheck="false">3 aprendizajes metodológicos centrales de Málaga</h3>
         <ul class="bullet-list">
-          <li><strong>La accesibilidad se planifica, no se improvisa.</strong> Málaga construyó diagnóstico robusto antes de definir acciones. Ese orden es determinante para la efectividad.</li>
-          <li><strong>La gobernanza transversal es condición necesaria.</strong> Turismo y accesibilidad operando coordinados multiplican el impacto de cada intervención.</li>
-          <li><strong>El marco estratégico alinea inversión y expectativas.</strong> Tipología de acciones + visión + indicadores convierte el plan en herramienta de gestión, no en documento de escritorio.</li>
+          <li spellcheck="false"><strong>La accesibilidad se planifica, no se improvisa.</strong> Málaga construyó diagnóstico robusto antes de definir acciones. Ese orden es determinante para la efectividad.</li>
+          <li spellcheck="false"><strong>La gobernanza transversal es condición necesaria.</strong> Turismo y accesibilidad operando coordinados multiplican el impacto de cada intervención.</li>
+          <li spellcheck="false"><strong>El marco estratégico alinea inversión y expectativas.</strong> Tipología de acciones + visión + indicadores convierte el plan en herramienta de gestión, no en documento de escritorio.</li>
         </ul>
       </div>
       <div class="card card-accent-red">
-        <h3 class="section-title red">Propuesta de primeros pasos para Caminito</h3>
+        <h3 class="section-title red" spellcheck="false">Propuesta de primeros pasos para Caminito</h3>
         <ul class="bullet-list red">
-          <li><strong>Inmediato (0-30 días):</strong> Designar referente en Ente de Turismo CABA. Convocar primera Mesa de Gobernanza.</li>
-          <li><strong>Corto plazo (1-3 meses):</strong> Lanzar diagnóstico multimodal. Establecer indicadores de línea base. Implementar 3-5 quick wins visibles.</li>
-          <li><strong>Mediano plazo (3-9 meses):</strong> Aprobar visión y plan estratégico. Ejecutar acciones de alta prioridad. Lanzar sello Comercio Accesible.</li>
-          <li><strong>Largo plazo (9-24 meses):</strong> Circuito Accesible Inteligente operativo. Primer Foro Abierto de Caminito Accesible. Medición de impacto.</li>
+          <li spellcheck="false"><strong>Inmediato (0-30 días):</strong> Designar referente en Ente de Turismo CABA. Convocar primera Mesa de Gobernanza.</li>
+          <li spellcheck="false"><strong>Corto plazo (1-3 meses):</strong> Lanzar diagnóstico multimodal. Establecer indicadores de línea base. Implementar 3-5 quick wins visibles.</li>
+          <li spellcheck="false"><strong>Mediano plazo (3-9 meses):</strong> Aprobar visión y plan estratégico. Ejecutar acciones de alta prioridad. Lanzar sello Comercio Accesible.</li>
+          <li spellcheck="false"><strong>Largo plazo (9-24 meses):</strong> Circuito Accesible Inteligente operativo. Primer Foro Abierto de Caminito Accesible. Medición de impacto.</li>
         </ul>
       </div>
     </div>
 
     <div style="margin-bottom:16px;">
-      <h3 class="section-title">Roadmap visual</h3>
+      <h3 class="section-title" spellcheck="false">Roadmap visual</h3>
     </div>
     <div class="roadmap">
       <div class="roadmap-step">
-        <div class="rs-num">→</div>
-        <div class="rs-time">0–30 días</div>
-        <div class="rs-label">Designar referente + convocar Mesa de Gobernanza</div>
+        <div class="rs-num" spellcheck="false">→</div>
+        <div class="rs-time" spellcheck="false">0–30 días</div>
+        <div class="rs-label" spellcheck="false">Designar referente + convocar Mesa de Gobernanza</div>
       </div>
       <div class="roadmap-step">
-        <div class="rs-num">01</div>
-        <div class="rs-time">1–3 meses</div>
-        <div class="rs-label">Diagnóstico multimodal + línea base + quick wins</div>
+        <div class="rs-num" spellcheck="false">01</div>
+        <div class="rs-time" spellcheck="false">1–3 meses</div>
+        <div class="rs-label" spellcheck="false">Diagnóstico multimodal + línea base + quick wins</div>
       </div>
       <div class="roadmap-step">
-        <div class="rs-num">02</div>
-        <div class="rs-time">3–9 meses</div>
-        <div class="rs-label">Plan estratégico + alta prioridad + sello accesible</div>
+        <div class="rs-num" spellcheck="false">02</div>
+        <div class="rs-time" spellcheck="false">3–9 meses</div>
+        <div class="rs-label" spellcheck="false">Plan estratégico + alta prioridad + sello accesible</div>
       </div>
       <div class="roadmap-step">
-        <div class="rs-num">03</div>
-        <div class="rs-time">9–24 meses</div>
-        <div class="rs-label">Circuito Inteligente + Foro Abierto + medición impacto</div>
+        <div class="rs-num" spellcheck="false">03</div>
+        <div class="rs-time" spellcheck="false">9–24 meses</div>
+        <div class="rs-label" spellcheck="false">Circuito Inteligente + Foro Abierto + medición impacto</div>
       </div>
       <div class="roadmap-step">
-        <div class="rs-num">∞</div>
-        <div class="rs-time">Permanente</div>
-        <div class="rs-label">Mejora continua, monitoreo, capacitación anual</div>
+        <div class="rs-num" spellcheck="false">∞</div>
+        <div class="rs-time" spellcheck="false">Permanente</div>
+        <div class="rs-label" spellcheck="false">Mejora continua, monitoreo, capacitación anual</div>
       </div>
     </div>
 
-    <div class="highlight-box" style="margin-top:20px;">
+    <div class="highlight-box" style="margin-top:20px;" spellcheck="false">
       <strong>Síntesis final:</strong> Málaga no tenía condiciones ideales cuando comenzó. Tenía metodología. Caminito tampoco necesita condiciones perfectas: necesita adoptar el mismo rigor metodológico — diagnóstico robusto, gobernanza formalizada, estrategia con prioridades claras — para transformar un circuito icónico en un circuito accesible de referencia.
     </div>
 
     <button class="toggle-orador" onclick="toggleOrador(this)">📋 Notas del orador</button>
     <div class="orador-content">
-      <div class="orador-box">
+      <div class="orador-box" spellcheck="false">
         <div class="orador-label">Notas del orador · 1 min</div>
         El mensaje de cierre es propositivo, no condicional. No decimos "sería bueno si Caminito hiciera esto". Decimos: el camino metodológico está claro, los primeros pasos son concretos y de bajo costo, y el argumento —derecho + mercado + calidad urbana— es lo suficientemente robusto para construir consenso entre actores. Lo que Málaga hizo en 20 años, Caminito puede estructurar metodológicamente en 6-12 meses porque tiene ventajas que Málaga no tenía: escala acotada, normativa vigente, y el conocimiento de lo que funcionó en otro destino comparable.
       </div>
@@ -1510,15 +1571,52 @@ function toggleOrador(btn) {
   btn.textContent = content.classList.contains('show') ? '📋 Ocultar notas' : '📋 Notas del orador';
 }
 
-// Keyboard navigation
+// Keyboard navigation — desactivar flechas en modo edición
 document.addEventListener('keydown', e => {
+  if (document.body.classList.contains('edit-mode')) return;
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
   if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prevSlide();
   if (e.key === 'Home') goTo(0);
   if (e.key === 'End')  goTo(total - 1);
 });
 
+// ── MODO EDICIÓN ──
+let editMode = false;
+const EDIT_SELECTORS =
+  '.slide h1, .slide h2, .slide h3, .slide p, .slide li, ' +
+  '.slide .tag, .slide .slide-num, .slide .subtitle-text, ' +
+  '.slide .s-num, .slide .s-label, .slide .num, .slide .label, ' +
+  '.slide .rs-num, .slide .rs-time, .slide .rs-label, ' +
+  '.slide td, .slide .step-text, .slide .highlight-box, .slide .orador-box';
+
+function toggleEdit() {
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  document.getElementById('edit-banner').classList.toggle('show', editMode);
+  const btn = document.getElementById('btn-edit');
+  btn.classList.toggle('editing', editMode);
+  btn.textContent = editMode ? '✕ Editar' : '✏️ Editar';
+  document.querySelectorAll(EDIT_SELECTORS).forEach(el => {
+    if (editMode) { el.setAttribute('contenteditable','true'); el.setAttribute('spellcheck','false'); }
+    else          { el.removeAttribute('contenteditable'); }
+  });
+}
+
+function saveEdits() {
+  document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  const blob = new Blob(['<!DOCTYPE html>\n' + document.documentElement.outerHTML], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Presentacion_Malaga_Caminito_editada.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  if (editMode) document.querySelectorAll(EDIT_SELECTORS).forEach(el => {
+    el.setAttribute('contenteditable','true'); el.setAttribute('spellcheck','false');
+  });
+}
+
 updateUI();
 </script>
-</body>
-</html>
+
+
+</body></html>
